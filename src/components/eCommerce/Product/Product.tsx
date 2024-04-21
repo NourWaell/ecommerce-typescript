@@ -28,7 +28,7 @@ const Product = memo(
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const currentRemainingQuantity = max - (quantity ?? 0);
+    const currentRemainingQuantity = (max as number) - (quantity ?? 0);
 
     const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
 
