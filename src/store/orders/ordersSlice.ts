@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import actPlaceOrder from "./act/actPlaceOrder";
-import { TLoading, TProduct, isString } from "@types";
+import actGetUserOrders from "./act/actGetUserOrders";
+import { TLoading, isString, TOrderItem } from "@types";
 
 interface IOrdersState {
-  orders: TProduct[];
+  ordersList: TOrderItem[];
   loading: TLoading;
   error: string | null;
 }
 
 const initialState: IOrdersState = {
-  orders: [],
+  ordersList: [],
   loading: "idle",
   error: null,
 };
@@ -24,6 +25,7 @@ const ordersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // place order
     builder.addCase(actPlaceOrder.pending, (state) => {
       state.loading = "pending";
     });
@@ -36,9 +38,23 @@ const ordersSlice = createSlice({
         state.error = action.payload;
       }
     });
+    // get order by logged in user
+    builder.addCase(actGetUserOrders.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(actGetUserOrders.fulfilled, (state, action) => {
+      state.loading = "succeeded";
+      state.ordersList = action.payload;
+    });
+    builder.addCase(actGetUserOrders.rejected, (state, action) => {
+      state.loading = "failed";
+      if (isString(action.payload)) {
+        state.error = action.payload;
+      }
+    });
   },
 });
 
-export { actPlaceOrder };
+export { actPlaceOrder, actGetUserOrders };
 export const { resetOrderStatus } = ordersSlice.actions;
 export default ordersSlice.reducer;

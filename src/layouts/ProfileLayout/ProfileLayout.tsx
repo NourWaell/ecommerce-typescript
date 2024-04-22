@@ -7,10 +7,10 @@ const ProfileLayout = () => {
       <Col xs={3}>
         <ListGroup>
           <ListGroup.Item as={NavLink} to="" end>
-            Account
+            Account Info
           </ListGroup.Item>
           <ListGroup.Item as={NavLink} to="orders">
-            Orders
+            My Orders
           </ListGroup.Item>
         </ListGroup>
       </Col>

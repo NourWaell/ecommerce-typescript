@@ -16,6 +16,7 @@ const CartSubtotalPrice = ({
   userAccessToken,
 }: CartSubtotalPriceProps) => {
   const dispatch = useAppDispatch();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -37,7 +38,7 @@ const CartSubtotalPrice = ({
 
   const placeOderHandler = () => {
     setLoading(true);
-    dispatch(actPlaceOrder())
+    dispatch(actPlaceOrder(subtotal))
       .unwrap()
       .then(() => {
         dispatch(clearCart());

@@ -5,7 +5,7 @@ import { RootState } from "@store/index";
 
 const actPlaceOrder = createAsyncThunk(
   "orders/actPlaceOrder",
-  async (_, thunkAPI) => {
+  async (subtotal: number, thunkAPI) => {
     const { rejectWithValue, getState } = thunkAPI;
     const { auth, cart } = getState() as RootState;
 
@@ -13,7 +13,7 @@ const actPlaceOrder = createAsyncThunk(
       id: el.id,
       title: el.title,
       price: el.price,
-      quantity: el.quantity,
+      quantity: cart.items[el.id],
       img: el.img,
     }));
 
@@ -21,6 +21,7 @@ const actPlaceOrder = createAsyncThunk(
       const res = await axios.post("/orders", {
         userId: auth.user?.id,
         items: cartItems,
+        subtotal,
       });
       return res.data;
     } catch (error) {
