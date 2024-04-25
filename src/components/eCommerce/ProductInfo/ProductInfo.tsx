@@ -1,7 +1,5 @@
 import styles from "./styles.module.css";
 
-const { product, productImg, productInfo } = styles;
-
 type ProductInfoProps = {
   title: string;
   img: string;
@@ -9,6 +7,7 @@ type ProductInfoProps = {
   children?: React.ReactNode;
   style?: React.CSSProperties;
   quantity?: number;
+  direction?: "row" | "column";
 };
 
 const ProductInfo = ({
@@ -18,15 +17,16 @@ const ProductInfo = ({
   quantity,
   style,
   children,
+  direction = "row",
 }: ProductInfoProps) => {
   return (
-    <div className={product} style={style}>
-      <div className={productImg}>
+    <div className={`${styles[`product-${direction}`]}`} style={style}>
+      <div className={`${styles[`productImg-${direction}`]}`}>
         <img src={img} alt={title} />
       </div>
-      <div className={productInfo}>
+      <div className={`${styles[`productInfo-${direction}`]}`}>
         <h2>{title}</h2>
-        <h3>Item Price: {price.toFixed(2)} EGP</h3>
+        <h3>{price.toFixed(2)} EGP</h3>
         {quantity && <h3>Total Quantity {quantity}</h3>}
         {quantity && <h3>Total Price {(quantity * price).toFixed(2)} EGP</h3>}
         {children}

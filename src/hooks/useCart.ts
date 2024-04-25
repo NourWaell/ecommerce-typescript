@@ -23,9 +23,9 @@ const useCart = () => {
     const promise = dispatch(actGetProductsByItems());
 
     return () => {
-      promise.abort();
       dispatch(cleanCartProductsFullInfo());
       dispatch(resetOrderStatus());
+      promise.abort();
     };
   }, [dispatch]);
 
